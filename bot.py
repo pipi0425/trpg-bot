@@ -8,8 +8,9 @@ from dotenv import load_dotenv
 # read .env
 load_dotenv()
 
-# load TOKEN from .env
+# load variables from .env
 TOKEN = os.getenv("DISCORD_TOKEN")
+PREFIX = os.getenv("PREFIX")
 
 # start discord client for the bot
 client = discord.Client()
@@ -24,9 +25,11 @@ async def on_ready():
 async def on_message(message):
     if message.author == client.user:
         return
-
-    if message.content.startswith('$hello'):
-        await message.channel.send('Hello!')
+    
+    #check prefix or mentioned
+    if message.content.startswith(PREFIX) or client.user in message.mentions:
+        await message.channel.send('hello')
+    
 
 # end with this line
 client.run(TOKEN)
